@@ -1,0 +1,12 @@
+topbar-appBar {
+  margin-bottom: 20px;
+}
+
+.topbar-title {
+  font-weight: 600;
+}
+
+.topbar-context {
+  font-weight: 500;
+  padding-right: 16px;
+}

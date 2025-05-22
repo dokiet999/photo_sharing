@@ -1,0 +1,51 @@
+.user-photos-container {
+    padding: 24px;
+  }
+  
+  .photo-grid {
+    margin-top: 16px;
+  }
+  
+  .photo-card {
+    height: 100%;
+    padding: 20px;
+  }
+  
+  .photo-image {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 16px;
+  }
+  
+  .comment-list {
+    background-color: #fff;
+  }
+  
+  .comment-item {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .comment-avatar {
+    background-color: #9c27b0; /* Secondary color */
+  }
+  
+  .comment-author {
+    font-weight: 500;
+    text-decoration: none;
+  }
+  
+  .comment-author:hover {
+    text-decoration: underline;
+  }
+  
+  .comment-text {
+    white-space: pre-line;
+  }
+  
+  .no-photos-message {
+    padding: 32px;
+    text-align: center;
+  }

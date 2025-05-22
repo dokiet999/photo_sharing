@@ -1,0 +1,35 @@
+.user-detail-container {
+    padding: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .user-avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .user-avatar {
+    width: 120px;
+    height: 120px;
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+  }
+  
+  .user-meta {
+    margin-bottom: 24px;
+  }
+  
+  .user-description {
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  
+  .user-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 16px;
+  }
