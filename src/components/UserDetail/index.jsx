@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -17,8 +17,43 @@ import "./styles.css";
  * UserDetail component displaying comprehensive user information
  */
 function UserDetail() {
-  const { userId } = useParams();
-  const user = models.userModel(userId);
+  const { userId: paramId } = useParams(); // Lấy userId từ URL nếu có
+  const [userId, setUserId] = useState(paramId || null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+  const fetchUser = async () => {
+    try {
+      if (paramId) {
+        const response = await fetch(`http://localhost:8081/user/${paramId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch user by ID");
+        }
+        const data = await response.json();
+        setUser(data);
+      } else {
+        const response = await fetch("http://localhost:8081/lists");
+        if (!response.ok) {
+          throw new Error("Failed to fetch user list");
+        }
+        const data = await response.json();
+        if (data.length > 0) {
+          setUserId(data[0]._id);
+          setUser(data[0]);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  fetchUser();
+}, [paramId]);
+
+
+  if (!user) {
+    return <Typography>Loading user data...</Typography>;
+  }
 
   return (
     <Paper elevation={3} sx={{ p: 4, maxWidth: 800, mx: "auto" }}>

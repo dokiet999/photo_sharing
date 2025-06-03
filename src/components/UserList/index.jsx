@@ -10,12 +10,28 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import models from "../../modelData/models";
+import { useState,useEffect } from "react";
+import { use } from "react";
 
 /**
  * UserList component that provides navigation to all user details
  */
 function UserList() {
-  const users = models.userListModel();
+  const [users, setUsers] = useState(null);
+
+  useEffect(() => {
+    fetch("http://localhost:8081/lists")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
+        return response.json();
+      })
+      .then((data) => setUsers(data))
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+      });
+  }, []);
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
@@ -32,55 +48,50 @@ function UserList() {
         ALL USERS
       </Typography>
       <Divider />
-      <List component="nav" sx={{ width: "100%" }}>
-        {users.map((user) => (
-          <React.Fragment key={user._id}>
-            <ListItem
-              sx={{
-                px: 2,
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                "&:hover": {
-                  backgroundColor: "rgba(0, 0, 0, 0.04)",
-                },
-              }}
-            >
-              <Box
-                component={Link}
-                to={`/users/${user._id}`}
-                sx={{ textDecoration: "none", color: "inherit", flexGrow: 1 }}
+
+      {users ? (
+        <List component="nav" sx={{ width: "100%" }}>
+          {users.map((user) => (
+            <React.Fragment key={user._id}>
+              <ListItem
+                sx={{
+                  px: 2,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  "&:hover": {
+                    backgroundColor: "rgba(0, 0, 0, 0.04)",
+                  },
+                }}
               >
-                <ListItemText
-                  primary={`${user.first_name} ${user.last_name}`}
-                  primaryTypographyProps={{
-                    variant: "body1",
-                    sx: { fontWeight: "medium" },
-                  }}
-                />
-              </Box>
-              <Box sx={{ display: "flex", gap: 1 }}>
-                <Chip
-                  label={user.numPhotos}
-                  size="small"
-                  sx={{ backgroundColor: "green", color: "white" }}
-                />
-                <Chip
-                  label={user.numComments}
-                  size="small"
+                <Box
                   component={Link}
-                  to={`/users/${user._id}/comments`}
-                  clickable
-                  sx={{ backgroundColor: "red", color: "white" }}
-                />
-              </Box>
-            </ListItem>
-            <Divider />
-          </React.Fragment>
-        ))}
-      </List>
+                  to={`/users/${user._id}`}
+                  sx={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    flexGrow: 1,
+                  }}
+                >
+                  <ListItemText
+                    primary={`${user.first_name} ${user.last_name}`}
+                    primaryTypographyProps={{
+                      variant: "body1",
+                      sx: { fontWeight: "medium" },
+                    }}
+                  />
+                </Box>
+              </ListItem>
+              <Divider />
+            </React.Fragment>
+          ))}
+        </List>
+      ) : (
+        <Typography variant="body2" sx={{ px: 2, py: 2 }}>
+          Loading users...
+        </Typography>
+      )}
     </div>
   );
 }
-
 export default UserList;
