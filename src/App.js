@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [advancedFeaturesEnabled, setAdvancedFeaturesEnabled] = useState(false);
 
   const handleLogin = (user) => {
     setLoggedInUser(user);
@@ -26,7 +27,7 @@ const App = () => {
     <Router>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <TopBar user={loggedInUser} handleLogout={handleLogout} />
+          <TopBar user={loggedInUser} handleLogout={handleLogout}  advancedFeaturesEnabled={advancedFeaturesEnabled} setAdvancedFeaturesEnabled={setAdvancedFeaturesEnabled}/>
         </Grid>
         <div className="main-topbar-buffer" />
         <Grid item sm={3}>
@@ -62,7 +63,7 @@ const App = () => {
                 path="/photos/:userId/:photoIndex?"
                 element={
                   <ProtectedRoute user={loggedInUser}>
-                    <UserPhotos currentUser={loggedInUser} />
+                    <UserPhotos currentUser={loggedInUser}  advancedFeaturesEnabled={advancedFeaturesEnabled}/>
                   </ProtectedRoute>
                 }
               />

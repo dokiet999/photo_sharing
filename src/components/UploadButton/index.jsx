@@ -15,7 +15,7 @@ function UploadPhotoButton({ userId, onUploadSuccess }) {
   const handleUpload = async () => {
     if (!file) {
       setError("Vui lòng chọn ảnh.");
-      return;
+      return; 
     }
 
     const formData = new FormData();
